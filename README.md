@@ -18,7 +18,21 @@ bash cvgenerator
 ## Programın Tanıtılması
 Program; üretilen her CV'yi ayrı bir klasör içinde barındırmakta ve her CV için ayrı style/html dosyaları oluşturmaktadır. Bu sayede önceden üretilen bir CV silinmeden yeni bir CV üretmeye imkan verilmektedir.
 ```
-// dizin oluşturan kod buraya gelecek
+# DOSYA ADINI BELİRLEME İŞLEMLERİ BAŞLANGICI
+sayac=0
+while [ true ]
+do
+  folder_name="cv$sayac"
+  if [ -e "./$folder_name" ]
+  then
+    sayac=`expr $sayac + 1`
+  else
+    FOLDER="$folder_name"
+    break
+  fi
+done
+
+# DOSYA ADINI BELİRLEME İŞLEMLERİ BİTİŞİ
 ```
 
 Program açıldıktan sonra ilk aşamada CV sahibinin isminin, fotoğrafının üstünde mi altında mı görünmesine karar vermesini istemektedir. Burada yapılacak seçim, ilgili kısmı aşağıdaki gibi gösterecektir;
@@ -29,6 +43,65 @@ Program açıldıktan sonra ilk aşamada CV sahibinin isminin, fotoğrafının �
 ##### İSİM RESMİN ALTINA
 ![Screenshot](https://github.com/basturkerhan/walls-and-stairs-2d-game/blob/main/readme-images/0.png)
 
+Ayrıca seçilen profil fotoğrafı kaydedilirken sadece uzantısı JPG/PNG olan yüklemeler kabul edilmektedir. Bunu kontrol eden kod aşağıdadır;
+```
+0)
+       IFS="/" read -a name <<< $PHOTOINPUT
+
+       isim=${name[-1]}
+
+       if [ `echo "$isim" | grep .jpg$` ]
+       then
+         cp "$PHOTOINPUT" ./resimler/
+         HTML="$HTML <br><img class=\"user-image img img-fluid\" src=\"./resimler/$isim\"><br>"
+         return 1
+       elif [ `echo "$isim" | grep .png$` ]
+       then
+         echo "Lütfen sadece png veya jpg formatta resim seciniz"
+         return 0
+       else
+         echo "Lütfen sadece png veya jpg formatta resim seciniz"
+         return 0
+       fi
+
+    ;;
+```
+
+Ayrıca örnek olması açısından kullanıcı deneyimlerini alıp HTML'ye basan kod da aşağıda verilmiştir;
+```
+# KULLANICININ DENEYİMLERİNİ ALMA FONKSİYONU BAŞLANGICI
+get_user_experience() {
+  EXINPUT=`zenity --entry --title="Deneyimler" --text="Aralarında virgül olacak şekilde deneyimlerinizi giriniz..."`
+
+  case $? in
+    0)
+      ex_html="
+            <!-- DENEYİMLER ALANI -->
+            <div class=\"row section\">
+            <div class=\"col-md-6\">
+                <div class=\"card shadow\">
+                    <div class=\"card-header\"><h2>Deneyimler</h2></div>
+                    <div class=\"card-body\">
+                        <ul>"
+
+      IFS=","
+      read -a exs <<< $EXINPUT
+
+      for experience in ${exs[*]}
+      do
+        ex_html="$ex_html <li>$experience</li>"
+      done
+      HTML="$HTML $ex_html </ul></div></div></div>"
+      get_user_volunteer_experience
+      ;;
+    1)
+	  echo "Program CV oluşturmadan sonlandırıldı";;
+   -1)
+	  echo "Program CV oluşturmadan sonlandırıldı";;
+  esac
+}
+# KULLANICININ DENEYİMLERİNİ ALMA FONKSİYONU BİTİŞİ
+```
 
 Daha sonra CV sahibinin bilgilerini alacak ekranlar gelmeye başlayacaktır. Burada;
 ##### - İsim Soyisim, Github, Telefon Numarası, Email Adresi, Linkedin Adresi
@@ -52,14 +125,38 @@ Burada;
 ##### - (...)
 
 Gibi özelleştirme seçenekleri mevcuttur. Yapılan her seçim "custom.css" dosyasına farklı bir CSS kodu ekleyerek ana belgenin özelleştirilebilmesini sağlar.
+
 Örnek bir özelleştirme kodu aşağıda verilmiştir;
 ```
-// örnek özelleştirme kodu gelecek
+select_education_card_background() {
+  EABGCOLOR=`zenity --title="Eğitim Kartlarının Arkaplan Rengi" --text="Eğitim kartlarının arkaplan rengini seçiniz..." --color-selection --show-palette`
+
+  case $? in
+    0)
+      CUSTOMCSS="$CUSTOMCSS .education-card {background-color: $EABGCOLOR;} "
+      cv_cikart ;;
+    1)
+      echo "Renk Seçmedin" ;;
+   -1)
+      echo "Renk Seçmedin" ;;
+  esac
+}
 ```
 
 Tüm seçim işlemleri bitmeden yeni bir HTML CV dökümanı oluşmayacaktır. Belgeyi oluşturma ve kaydetme işlemleri son adımdaki şu kodlar aracılığıyla yapılmaktadır.
 ```
-// belgeyi kaydetme kodları
+cv_cikart() {
+    mkdir "$FOLDER"
+    mkdir "$FOLDER/css"
+    cp ./css/* "$FOLDER/css"
+    mkdir "$FOLDER/resimler"
+    cp ./resimler/* "$FOLDER/resimler"
+
+    cat sablon.html > "$FOLDER/index.html"
+    echo "$HTML <footer><div class="card"><div class="card-body"><h2>$FULLNAME</h2></div></div></footer></body></html>" >> "$FOLDER/index.html"
+    echo "$CUSTOMCSS" >> "$FOLDER/css/custom.css"
+    # firefox....
+}
 ```
 
 ## Programın İçinden Resimler
