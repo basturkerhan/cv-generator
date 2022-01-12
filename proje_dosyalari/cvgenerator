@@ -1,0 +1,506 @@
+#!/bin/bash
+
+FOLDER=""
+HTML=""
+CUSTOMCSS=""
+FULLNAME=""
+EMAIL=""
+TELNO=""
+LINKEDIN=""
+GITHUB=""
+
+
+cv_cikart() {
+    mkdir "$FOLDER"
+    mkdir "$FOLDER/css"
+    cp ./css/* "$FOLDER/css"
+    mkdir "$FOLDER/resimler"
+    cp ./resimler/* "$FOLDER/resimler"
+
+    cat sablon.html > "$FOLDER/index.html"
+    echo "$HTML <footer><div class="card"><div class="card-body"><h2>$FULLNAME</h2></div></div></footer></body></html>" >> "$FOLDER/index.html"
+    echo "$CUSTOMCSS" >> "$FOLDER/css/custom.css"
+    # firefox....
+}
+
+
+
+select_education_card_background() {
+  EABGCOLOR=`zenity --title="Eğitim Kartlarının Arkaplan Rengi" --text="Eğitim kartlarının arkaplan rengini seçiniz..." --color-selection --show-palette`
+
+  case $? in
+    0)
+      CUSTOMCSS="$CUSTOMCSS .education-card {background-color: $EABGCOLOR;} "
+      cv_cikart ;;
+    1)
+      echo "Renk Seçmedin" ;;
+   -1)
+      echo "Renk Seçmedin" ;;
+  esac
+}
+
+select_skill_card_background() {
+  SCABGCOLOR=`zenity --title="Yetenekler Kartların Arkaplan Rengi" --text="Yetenekler kartların arkaplan rengini seçiniz..." --color-selection --show-palette`
+
+  case $? in
+    0)
+      CUSTOMCSS="$CUSTOMCSS .skill-card {background-color: $SCABGCOLOR;} "
+      select_education_card_background ;;
+    1)
+      echo "Renk Seçmedin" ;;
+   -1)
+      echo "Renk Seçmedin" ;;
+  esac
+}
+
+
+select_cards_background() {
+  CABGCOLOR=`zenity --title="Kart ve Footer Arkaplan Rengi" --text="Kartların ve footerin arkaplan rengini seçiniz..." --color-selection --show-palette`
+
+  case $? in
+    0)
+      CUSTOMCSS="$CUSTOMCSS .card, .section, .card-header {background-color: $CABGCOLOR;} "
+      select_skill_card_background ;;
+    1)
+      echo "Renk Seçmedin" ;;
+   -1)
+      echo "Renk Seçmedin" ;;
+  esac
+}
+
+
+select_line_color() {
+  LCOLOR=`zenity --title="Ara Çizgi Rengi" --text="Ara çizgi rengini seçiniz..." --color-selection --show-palette`
+
+  case $? in
+    0)
+      CUSTOMCSS="$CUSTOMCSS hr {background: $LCOLOR !important;} "
+      select_cards_background ;;
+    1)
+      echo "Renk Seçmedin" ;;
+   -1)
+      echo "Renk Seçmedin" ;;
+  esac
+}
+
+
+
+select_content_background() {
+  CBGCOLOR=`zenity --title="İçerik Arkaplan Rengi" --text="İçeriği kaplayacak arkaplan rengini seçiniz..." --color-selection --show-palette`
+
+  case $? in
+    0)
+      CUSTOMCSS="$CUSTOMCSS #content {background-color: $CBGCOLOR;} "
+      select_line_color ;;
+    1)
+      echo "Renk Seçmedin" ;;
+   -1)
+      echo "Renk Seçmedin" ;;
+  esac
+}
+
+
+select_header_background() {
+  HBGCOLOR=`zenity --title="Başlık Arkaplan Rengi" --text="Başlığı kaplayacak arkaplan rengini seçiniz..." --color-selection --show-palette`
+
+  case $? in
+    0)
+      CUSTOMCSS="$CUSTOMCSS #header {background-color: $HBGCOLOR;} "
+      select_content_background ;;
+    1)
+      echo "Renk Seçmedin" ;;
+   -1)
+      echo "Renk Seçmedin" ;;
+  esac
+}
+
+
+select_header_text_color() {
+  HTCOLOR=`zenity --title="Başlık Yazı Rengi" --text="Başlık yazı rengini seçiniz..." --color-selection --show-palette`
+
+  case $? in
+    0)
+      CUSTOMCSS="$CUSTOMCSS h2,h3 {color: $HTCOLOR;} "
+      select_header_background ;;
+    1)
+      echo "Renk Seçmedin" ;;
+   -1)
+      echo "Renk Seçmedin" ;;
+  esac
+}
+
+
+
+select_main_text_color() {
+  MTCOLOR=`zenity --title="Ana Yazı Rengi" --text="Ana yazı rengini seçiniz..." --color-selection --show-palette`
+
+  case $? in
+    0)
+      CUSTOMCSS="$CUSTOMCSS body {color: $MTCOLOR;} "
+      select_header_text_color ;;
+    1)
+      echo "Renk Seçmedin" ;;
+   -1)
+      echo "Renk Seçmedin" ;;
+  esac
+}
+
+
+select_main_header_text_color() {
+  HETCOLOR=`zenity --title="İsim ve Meslek Yazı Rengi" --text="İsim ve meslek yazı rengini seçiniz..." --color-selection --show-palette`
+
+  case $? in
+    0)
+      CUSTOMCSS="$CUSTOMCSS .header-text {color: $HETCOLOR !important;} "
+      select_main_text_color ;;
+    1)
+      echo "Renk Seçmedin" ;;
+   -1)
+      echo "Renk Seçmedin" ;;
+  esac
+}
+
+
+
+show_no_customize_cv() {
+theurl="http://www.linuxerhanhost.eu5.org"
+
+zenity --text-info --width 800 --height 800 --title="Henüz Özelleştirilmemiş CV Görünümü" --html --url=$theurl
+  rc=$?
+  case $rc in
+    0)
+      select_main_header_text_color ;;
+    1)
+      echo "Program CV oluşturmadan sonlandırıldı";;
+   -1)
+      echo "Program CV oluşturmadan sonlandırıldı";;
+  esac
+}
+
+
+
+# KULLANICININ EĞİTİM DURUMUNU ALMA FONKSİYONU BAŞLANGICI
+get_user_education() {
+  EDUCATIONINPUT=`zenity --entry --title="Eğitimler" --text="Aralarında virgül olacak şekilde eğitim aldığınız yerleri giriniz..."`
+
+  case $? in
+    0)
+      education_html="
+            <!-- EĞİTİM ALANI -->
+            <div class=\"card shadow\">
+            <div class=\"card-header\"><h2>Eğitim</h2></div>
+            <div class=\"card-body\">
+                <div class=\"row\">"
+
+      IFS=","
+      read -a educations <<< $EDUCATIONINPUT
+
+      for education in ${educations[*]}
+      do
+        education_html="$education_html <div class=\"col-md-6\"><div class=\"card shadow-sm education-card\">$education</div></div>"
+      done
+      HTML="$HTML $education_html </div></div></div></div></div>"
+      show_no_customize_cv
+      ;;
+    1)
+	  echo "Program CV oluşturmadan sonlandırıldı";;
+   -1)
+	  echo "Program CV oluşturmadan sonlandırıldı";;
+  esac
+}
+# KULLANICININ EĞİTİM DURUMUNU ALMA FONKSİYONU BİTİŞİ
+
+
+
+
+# KULLANICININ YETENEKLERİNİ ALMA FONKSİYONU BAŞLANGICI
+get_user_skills() {
+  SKILLSINPUT=`zenity --entry --title="Yetenekler" --text="Aralarında virgül olacak şekilde yeteneklerinizi giriniz..."`
+
+  case $? in
+    0)
+      skills_html="
+            <!-- YETENEKLER ALANI -->
+            <div class=\"card shadow\">
+            <div class=\"card-header\"><h2>Yetkinlikler</h2></div>
+            <div class=\"card-body\">
+                <div class=\"row\">"
+
+      IFS=","
+      read -a skills <<< $SKILLSINPUT
+
+      for skill in ${skills[*]}
+      do
+        skills_html="$skills_html <div class=\"col-md-6\"><div class=\"card shadow-sm skill-card\">$skill</div></div>"
+      done
+      HTML="$HTML $skills_html </div></div></div><hr>"
+      get_user_education
+      ;;
+    1)
+	  echo "Program CV oluşturmadan sonlandırıldı";;
+   -1)
+	  echo "Program CV oluşturmadan sonlandırıldı";;
+  esac
+}
+# KULLANICININ YETENEKLERİNİ ALMA FONKSİYONU BİTİŞİ
+
+
+
+# KULLANICININ GÖNÜLLÜ DENEYİMLERİNİ ALMA FONKSİYONU BAŞLANGICI
+get_user_volunteer_experience() {
+  VOLEXINPUT=`zenity --entry --title="Gönüllü Deneyimler" --text="Aralarında virgül olacak şekilde gönüllü deneyimlerinizi giriniz..."`
+
+  case $? in
+    0)
+      volex_html="
+            <!-- GÖNÜLLÜ DENEYİMLER ALANI -->
+            <div class=\"col-md-6\">
+                <div class=\"card shadow\">
+                    <div class=\"card-header\"><h2>Gönüllü Deneyimler</h2></div>
+                    <div class=\"card-body\">
+                        <ul>"
+
+      IFS=","
+      read -a volexs <<< $VOLEXINPUT
+
+      for experience in ${volexs[*]}
+      do
+        volex_html="$volex_html <li>$experience</li>"
+      done
+      HTML="$HTML $volex_html </ul></div></div></div></div><hr>"
+      get_user_skills
+      ;;
+    1)
+	  echo "Program CV oluşturmadan sonlandırıldı";;
+   -1)
+	  echo "Program CV oluşturmadan sonlandırıldı";;
+  esac
+}
+# KULLANICININ GÖNÜLLÜ DENEYİMLERİNİ ALMA FONKSİYONU BİTİŞİ
+
+
+
+
+# KULLANICININ DENEYİMLERİNİ ALMA FONKSİYONU BAŞLANGICI
+get_user_experience() {
+  EXINPUT=`zenity --entry --title="Deneyimler" --text="Aralarında virgül olacak şekilde deneyimlerinizi giriniz..."`
+
+  case $? in
+    0)
+      ex_html="
+            <!-- DENEYİMLER ALANI -->
+            <div class=\"row section\">
+            <div class=\"col-md-6\">
+                <div class=\"card shadow\">
+                    <div class=\"card-header\"><h2>Deneyimler</h2></div>
+                    <div class=\"card-body\">
+                        <ul>"
+
+      IFS=","
+      read -a exs <<< $EXINPUT
+
+      for experience in ${exs[*]}
+      do
+        ex_html="$ex_html <li>$experience</li>"
+      done
+      HTML="$HTML $ex_html </ul></div></div></div>"
+      get_user_volunteer_experience
+      ;;
+    1)
+	  echo "Program CV oluşturmadan sonlandırıldı";;
+   -1)
+	  echo "Program CV oluşturmadan sonlandırıldı";;
+  esac
+}
+# KULLANICININ DENEYİMLERİNİ ALMA FONKSİYONU BİTİŞİ
+
+
+
+# KULLANICININ HAKKINDA ALMA FONKSİYONU BAŞLANGICI
+get_desc() {
+  HAKKINDA=$(zenity --entry \
+       --height 600 \
+       --width 600 \
+       --title "HAKKIMDA" \
+       --text "Sizi anlatan bir metin giriniz");
+
+    case $? in
+      0)
+        HTML="$HTML <div id=\"content\">
+    <div class=\"container\">
+        <div class=\"row section shadow\">
+            <div class=\"col-md-6\">
+                <div class=\"card pi-card\">
+                    <div class=\"card-header\"><h2>Hakkımda</h2></div>
+                    <div class=\"card-body\">hakkımda</div>
+                </div>
+            </div>
+            <div class=\"col-md-6\">
+                <div class=\"card pi-card\">
+                    <div class=\"card-header\"><h2>Kişisel Bilgiler</h2></div>
+
+                    <div class=\"card-body\">
+                        <div class=\"row\">
+                            <div class=\"col-3\"><img src=\"resimler/telephone.png\"> <b>Telefon</b></div>
+                            <div class=\"col-9\">$TELNO</div>
+                            <div class=\"col-3\"><img src=\"resimler/email.png\"> <b>Email</b></div>
+                            <div class=\"col-9\">$EMAIL</div>
+                            <div class=\"col-3\"><img src=\"resimler/github.png\"> <b>Github</b></div>
+                            <div class=\"col-9\">$GITHUB</div>
+                            <div class=\"col-3\"><img src=\"resimler/linkedin.png\"> <b>Linkedin</b></div>
+                            <div class=\"col-9\">$LINKEDIN</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>"
+
+       get_user_experience ;;
+
+      1)
+        echo "Program CV oluşturmadan sonlandırıldı" ;;
+     -1)
+        echo "Program CV oluşturmadan sonlandırıldı" ;;
+    esac
+}
+# KULLANICININ HAKKINDA ALMA FONKSİYONU BİTİŞİ
+
+
+
+
+# KULLANICININ FOTOĞRAFINI ALMA FONKSİYONU BAŞLANGICI
+get_user_photo() {
+  PHOTOINPUT=`zenity --width 600 --height 600 --file-selection --title="JPG veya PNG bir fotoğraf seçiniz."`
+  case $? in
+    0)
+       IFS="/" read -a name <<< $PHOTOINPUT
+
+       isim=${name[-1]}
+
+       if [ `echo "$isim" | grep .jpg$` ]
+       then
+         cp "$PHOTOINPUT" ./resimler/
+         HTML="$HTML <br><img class=\"user-image img img-fluid\" src=\"./resimler/$isim\"><br>"
+         return 1
+       elif [ `echo "$isim" | grep .png$` ]
+       then
+         echo "Lütfen sadece png veya jpg formatta resim seciniz"
+         return 0
+       else
+         echo "Lütfen sadece png veya jpg formatta resim seciniz"
+         return 0
+       fi
+
+    ;;
+    1)
+	  return 0 ;;
+   -1)
+	  return 0 ;;
+  esac
+
+}
+# KULLANICININ FOTOĞRAFINI ALMA FONKSİYONU BİTİŞİ
+
+
+# KİŞİSEL BİLGİLERİ ALMA VE HTML YE DÖKME FONKSİYONU BAŞLANGICI
+get_personal_infos() {
+  row=$(zenity --forms --title="Kişisel Bilgiler" --text="Kişisel bilgilerinizi giriniz..." --width 600 --height 600 \
+    --add-entry="Adınız Soyadınız" \
+    --add-entry="Email Adresiniz" \
+    --add-entry="Telefon Numaranız" \
+    --add-entry="LinkedIn Adresiniz" \
+    --add-entry="Github Adresiniz") ;
+
+  case $? in
+    0)
+      IFS="|" read -a personal_info <<< $row
+      FULLNAME=${personal_info[0]}
+      EMAIL=${personal_info[1]}
+      TELNO=${personal_info[2]}
+      LINKEDIN=${personal_info[3]}
+      GITHUB=${personal_info[4]}
+      
+      HTML="$HTML <h1 class=\"header-text\">$FULLNAME</h1>"
+      return 1 ;;
+    1)
+      return 0 ;;
+    -1)
+      return 0 ;;
+  esac
+}
+# KİŞİSEL BİLGİLERİ ALMA VE HTML YE DÖKME FONKSİYONU BİTİŞİ
+
+
+
+
+
+
+
+# BAŞLIK METNİ FOTOĞRAFA GÖRE ÜSTTE Mİ ALTTA MI OLSUN BAŞLANGICI
+select_design() {
+  next=0
+  SECIM=`zenity --list --radiolist --title "Başlık Konum Seçimi" --text="<b>Başlığın, fotoğrafınıza göre olmasını istediğiniz konumu seçiniz</b>" --width 800 --height 600 \
+                --column "Seçim" --column "Konum" FALSE "Fotoğrafın Altına" TRUE "Fotoğrafın Üstüne"`
+
+  HTML="$HTML <div id="header">"
+
+  case $? in
+    1) return 0 ;;
+   -1) return 0 ;;
+  esac
+
+  case "$SECIM" in
+    "Fotoğrafın Altına")
+      get_user_photo
+      if [ $? != 0 ]
+      then
+        get_personal_infos
+        if [ $? != 0 ]
+        then
+          next=1 
+        fi
+      fi ;;
+
+    "Fotoğrafın Üstüne")
+      get_personal_infos
+      if [ $? != 0 ]
+      then
+        get_user_photo
+        if [ $? != 0 ]
+        then
+          next=1 
+        fi
+      fi ;;
+  esac
+
+  if [ $next == 1 ]
+  then
+    HTML="$HTML </div>"
+    get_desc
+  fi
+}
+# BAŞLIK METNİ FOTOĞRAFA GÖRE ÜSTTE Mİ ALTTA MI OLSUN BİTİŞİ
+
+
+
+
+
+# DOSYA ADINI BELİRLEME İŞLEMLERİ BAŞLANGICI
+sayac=0
+while [ true ]
+do
+  folder_name="cv$sayac"
+  if [ -e "./$folder_name" ]
+  then
+    sayac=`expr $sayac + 1`
+  else
+    FOLDER="$folder_name"
+    break
+  fi
+done
+
+# DOSYA ADINI BELİRLEME İŞLEMLERİ BİTİŞİ
+
+select_design

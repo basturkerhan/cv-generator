@@ -1,0 +1,53 @@
+#header {
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+#content {
+    padding-top: 3rem;
+}
+
+.section {
+    margin-bottom: 2rem;
+}
+.card-header {
+    background-color: #fff;
+    border-bottom: none !important;
+    text-align: center;
+}
+h2 {
+    font-size: 1.6rem;
+}
+.user-image {
+    min-width: 15rem;
+    min-height: 15rem;
+    max-width: 15rem;
+    max-height: 15rem;
+    border-radius: 50%;
+}
+
+.personal-info-list {
+    list-style-type: none;
+}
+.pi-card {
+    border: none !important;
+}
+hr {
+    height: .2rem !important;
+}
+.skill-card, .education-card {
+    padding: 1rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+footer {
+    text-align: center;
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-top: 0rem;
+}
