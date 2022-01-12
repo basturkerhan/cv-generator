@@ -164,9 +164,14 @@ cv_cikart() {
 
 ## Programın İçinden Resimler
 ![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim2.PNG)
+<br>
 ![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim4.PNG)
+<br>
 ![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim1.PNG)
+<br>
 ![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim5.PNG)
+<br>
 ![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim3.PNG)
+<br>
 
 ## Bazı Örnek CV HTML Belgeleri
