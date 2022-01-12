@@ -175,3 +175,11 @@ cv_cikart() {
 <br>
 
 ## Bazı Örnek CV HTML Belgeleri
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv1.PNG)
+<br>
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv2.PNG)
+<br>
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv3.PNG)
+<br>
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv4.PNG)
+<br>
