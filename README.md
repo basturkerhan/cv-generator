@@ -17,6 +17,7 @@ bash cvgenerator
 
 ## Programın Tanıtılması
 Program; üretilen her CV'yi ayrı bir klasör içinde barındırmakta ve her CV için ayrı style/html dosyaları oluşturmaktadır. Bu sayede önceden üretilen bir CV silinmeden yeni bir CV üretmeye imkan verilmektedir.
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/dizin_yapisi.PNG)
 ```
 # DOSYA ADINI BELİRLEME İŞLEMLERİ BAŞLANGICI
 sayac=0
@@ -37,11 +38,13 @@ done
 
 Program açıldıktan sonra ilk aşamada CV sahibinin isminin, fotoğrafının üstünde mi altında mı görünmesine karar vermesini istemektedir. Burada yapılacak seçim, ilgili kısmı aşağıdaki gibi gösterecektir;
 
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/baslik_secim.PNG)
+
 ##### İSİM RESMİN ÜSTÜNE
-![Screenshot](https://github.com/basturkerhan/walls-and-stairs-2d-game/blob/main/readme-images/0.png)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/baslik_ust.PNG)
 
 ##### İSİM RESMİN ALTINA
-![Screenshot](https://github.com/basturkerhan/walls-and-stairs-2d-game/blob/main/readme-images/0.png)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/baslik_alt.PNG)
 
 Ayrıca seçilen profil fotoğrafı kaydedilirken sadece uzantısı JPG/PNG olan yüklemeler kabul edilmektedir. Bunu kontrol eden kod aşağıdadır;
 ```
@@ -160,6 +163,10 @@ cv_cikart() {
 ```
 
 ## Programın İçinden Resimler
-
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim1.PNG)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim2.PNG)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim3.PNG)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim4.PNG)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim5.PNG)
 
 ## Bazı Örnek CV HTML Belgeleri
