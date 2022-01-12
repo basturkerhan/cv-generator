@@ -20,7 +20,7 @@ cv_cikart() {
     cat sablon.html > "$FOLDER/index.html"
     echo "$HTML <footer><div class="card"><div class="card-body"><h2>$FULLNAME</h2></div></div></footer></body></html>" >> "$FOLDER/index.html"
     echo "$CUSTOMCSS" >> "$FOLDER/css/custom.css"
-    # firefox....
+    zenity   --info --width 500  --height 500  --text  '<span foreground="green" font="26"><i><b>CVGenerator</b> Bilgilerinizi Başarıyla İşledi ve CV Oluşturdu!</i></span>'
 }
 
 
@@ -203,9 +203,9 @@ get_user_education() {
       show_no_customize_cv
       ;;
     1)
-	  echo "Program CV oluşturmadan sonlandırıldı";;
+ echo "Program CV oluşturmadan sonlandırıldı";;
    -1)
-	  echo "Program CV oluşturmadan sonlandırıldı";;
+ echo "Program CV oluşturmadan sonlandırıldı";;
   esac
 }
 # KULLANICININ EĞİTİM DURUMUNU ALMA FONKSİYONU BİTİŞİ
@@ -237,9 +237,9 @@ get_user_skills() {
       get_user_education
       ;;
     1)
-	  echo "Program CV oluşturmadan sonlandırıldı";;
+ echo "Program CV oluşturmadan sonlandırıldı";;
    -1)
-	  echo "Program CV oluşturmadan sonlandırıldı";;
+ echo "Program CV oluşturmadan sonlandırıldı";;
   esac
 }
 # KULLANICININ YETENEKLERİNİ ALMA FONKSİYONU BİTİŞİ
@@ -271,9 +271,9 @@ get_user_volunteer_experience() {
       get_user_skills
       ;;
     1)
-	  echo "Program CV oluşturmadan sonlandırıldı";;
+ echo "Program CV oluşturmadan sonlandırıldı";;
    -1)
-	  echo "Program CV oluşturmadan sonlandırıldı";;
+ echo "Program CV oluşturmadan sonlandırıldı";;
   esac
 }
 # KULLANICININ GÖNÜLLÜ DENEYİMLERİNİ ALMA FONKSİYONU BİTİŞİ
@@ -307,9 +307,9 @@ get_user_experience() {
       get_user_volunteer_experience
       ;;
     1)
-	  echo "Program CV oluşturmadan sonlandırıldı";;
+ echo "Program CV oluşturmadan sonlandırıldı";;
    -1)
-	  echo "Program CV oluşturmadan sonlandırıldı";;
+ echo "Program CV oluşturmadan sonlandırıldı";;
   esac
 }
 # KULLANICININ DENEYİMLERİNİ ALMA FONKSİYONU BİTİŞİ
@@ -395,9 +395,9 @@ get_user_photo() {
 
     ;;
     1)
-	  return 0 ;;
+ return 0 ;;
    -1)
-	  return 0 ;;
+ return 0 ;;
   esac
 
 }
@@ -421,7 +421,7 @@ get_personal_infos() {
       TELNO=${personal_info[2]}
       LINKEDIN=${personal_info[3]}
       GITHUB=${personal_info[4]}
-      
+     
       HTML="$HTML <h1 class=\"header-text\">$FULLNAME</h1>"
       return 1 ;;
     1)
@@ -459,7 +459,7 @@ select_design() {
         get_personal_infos
         if [ $? != 0 ]
         then
-          next=1 
+          next=1
         fi
       fi ;;
 
@@ -470,7 +470,7 @@ select_design() {
         get_user_photo
         if [ $? != 0 ]
         then
-          next=1 
+          next=1
         fi
       fi ;;
   esac
@@ -483,7 +483,10 @@ select_design() {
 }
 # BAŞLIK METNİ FOTOĞRAFA GÖRE ÜSTTE Mİ ALTTA MI OLSUN BİTİŞİ
 
-
+intro() {
+zenity   --info --width 500  --height 500  --text  '<span foreground="green" font="26"><i><b>CVGenerator</b> Programını Kullandığınız İçin Teşekkürler!</i></span>\n\nBu program boyunca sizden gerekli bilgileriniz istenerek bir CV çıktısı üretilecektir, herhangi bir adımda programı kapatırsanız CV üretme işlemi iptal edilecek ve herhangi bir dosya oluşturulmayacaktır.'
+select_design
+}
 
 
 
@@ -503,4 +506,4 @@ done
 
 # DOSYA ADINI BELİRLEME İŞLEMLERİ BİTİŞİ
 
-select_design
+intro
