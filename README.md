@@ -163,23 +163,23 @@ cv_cikart() {
 ```
 
 ## Programın İçinden Resimler
-![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim2.png)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim2.PNG)
 <br>
-![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim4.png)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim4.PNG)
 <br>
-![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim1.png)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim1.PNG)
 <br>
-![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim5.png)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim5.PNG)
 <br>
-![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim3.png)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim3.PNG)
 <br>
 
 ## Bazı Örnek CV HTML Belgeleri
-![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv1.PNG)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv1.png)
 <br>
-![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv2.PNG)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv2.png)
 <br>
-![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv3.PNG)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv3.png)
 <br>
-![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv4.PNG)
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/cv4.png)
 <br>
