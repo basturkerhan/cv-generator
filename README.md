@@ -4,6 +4,9 @@
 ## Hakkında
 Bu proje; Linux Kabuk Programlama, HTML ve CSS teknolojileri kullanılarak Linux Araçları ve Kabuk Programlama dersi ödevi için hazırlanmış özelleştirilebilir CV üretmeyi sağlayan bir uygulamadır. **Projeyi anlattığım YouTube adresine şu bağlantı aracılığıyla erişebilirsiniz: http://com/**
 
+## Önemli Not
+Projeyi çalıştırabilmek için Zenity yüklü olan GUI destekli Linux işletim sistemli bir makineye ihtiyaç vardır.
+
 ## Kullanılan Teknolojiler
 ##### -HTML
 ##### -CSS
