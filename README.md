@@ -1,4 +1,5 @@
 # CV Generator
+![Screenshot](https://github.com/basturkerhan/cv-generator/blob/main/readme-images/presim0.PNG)
 <br>
 
 ## Hakkında
