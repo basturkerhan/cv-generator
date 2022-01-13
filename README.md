@@ -51,26 +51,37 @@ Program açıldıktan sonra ilk aşamada CV sahibinin isminin, fotoğrafının �
 
 Ayrıca seçilen profil fotoğrafı kaydedilirken sadece uzantısı JPG/PNG olan yüklemeler kabul edilmektedir. Bunu kontrol eden kod aşağıdadır;
 ```
-0)
+# KULLANICININ FOTOĞRAFINI ALMA FONKSİYONU BAŞLANGICI
+get_user_photo() {
+  PHOTOINPUT=`zenity --width 600 --height 600 --file-selection --title="JPG veya PNG bir fotoğraf seçiniz."`
+  case $? in
+    0)
        IFS="/" read -a name <<< $PHOTOINPUT
 
        isim=${name[-1]}
 
        if [ `echo "$isim" | grep .jpg$` ]
        then
-         cp "$PHOTOINPUT" ./resimler/
          HTML="$HTML <br><img class=\"user-image img img-fluid\" src=\"./resimler/$isim\"><br>"
          return 1
        elif [ `echo "$isim" | grep .png$` ]
        then
-         echo "Lütfen sadece png veya jpg formatta resim seciniz"
-         return 0
+         HTML="$HTML <br><img class=\"user-image img img-fluid\" src=\"./resimler/$isim\"><br>"
+         return 1
        else
          echo "Lütfen sadece png veya jpg formatta resim seciniz"
          return 0
        fi
 
     ;;
+    1)
+	  return 0 ;;
+   -1)
+	  return 0 ;;
+  esac
+
+}
+# KULLANICININ FOTOĞRAFINI ALMA FONKSİYONU BİTİŞİ
 ```
 
 Ayrıca örnek olması açısından kullanıcı deneyimlerini alıp HTML'ye basan kod da aşağıda verilmiştir;
@@ -157,11 +168,12 @@ cv_cikart() {
     cp ./css/* "$FOLDER/css"
     mkdir "$FOLDER/resimler"
     cp ./resimler/* "$FOLDER/resimler"
+    cp "$PHOTOINPUT" "./$FOLDER/resimler/"
 
     cat sablon.html > "$FOLDER/index.html"
     echo "$HTML <footer><div class="card"><div class="card-body"><h2>$FULLNAME</h2></div></div></footer></body></html>" >> "$FOLDER/index.html"
     echo "$CUSTOMCSS" >> "$FOLDER/css/custom.css"
-    # firefox....
+    zenity   --info --width 500  --height 500  --text  '<span foreground="green" font="26"><i><b>CVGenerator</b> Bilgilerinizi Başarıyla İşledi ve CV Oluşturdu!</i></span>'
 }
 ```
 
